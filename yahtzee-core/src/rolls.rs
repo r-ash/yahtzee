@@ -9,7 +9,7 @@
 // There are C(10,5) = 252 distinct rolls of 5 dice.
 // A "keep" is any sub-multiset: counts[i] <= roll[i] for all i.
 
-use crate::state::{CHANCE_CAT, FOUR_OF_A_KIND_CAT, FULL_HOUSE_CAT, LRG_STRAIGHT_CAT, ONES_CAT, TWOS_CAT, SIXES_CAT, SML_STRAIGHT_CAT, TABLE_SIZE, THREE_OF_A_KIND_CAT, YAHTZEE_CAT};
+use crate::state::{CHANCE_CAT, FOUR_OF_A_KIND_CAT, FULL_HOUSE_CAT, LRG_STRAIGHT_CAT, ONES_CAT, SIXES_CAT, SML_STRAIGHT_CAT, THREE_OF_A_KIND_CAT, YAHTZEE_CAT};
 
 pub type Roll = [u8; 6];
 pub const NUM_ROLLS: usize = 252;

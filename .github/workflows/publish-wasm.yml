@@ -23,11 +23,11 @@ jobs:
 
       - uses: actions/setup-node@v4
         with:
-          node-version: 20
+          node-version: 24
           registry-url: 'https://registry.npmjs.org'
 
       - name: Build WASM package
         run: wasm-pack build yahtzee-wasm --target web --release
 
       - name: Publish to npm
-        run: npm publish yahtzee-wasm/pkg --access public
+        run: npm publish ./yahtzee-wasm/pkg --access public

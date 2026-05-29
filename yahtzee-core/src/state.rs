@@ -39,13 +39,6 @@ pub fn decode_state(idx: usize) -> (u16, u8, bool) {
     (categories, upper_total, yahtzee_bonus)
 }
 
-// Fill the category in state, assumed here the category is unfilled
-fn next_state_encoded(state: usize, roll: &rolls::Roll, category: u8) -> usize {
-    let (categories, upper_total, yahtzee_bonus) = decode_state(state);
-
-    next_state(categories, upper_total, yahtzee_bonus, roll, category)
-}
-
 pub fn next_state(categories: u16, upper_total: u8, yahtzee_bonus: bool, roll: &rolls::Roll, category: u8) -> usize {
     let mut new_categories = categories;
     let mut new_upper = upper_total;
@@ -89,10 +82,9 @@ mod tests {
         let categories: u16 = 0b000_0100_0010_1010;
         let upper_total: u8 = 23;
         let yahtzee: bool = true;
-        let encoded = encode_state(categories, upper_total, yahtzee);
 
         // fill all 1s in "1"s category
-        let next = next_state_encoded(encoded, &[5, 0, 0, 0, 0, 0], ONES_CAT);
+        let next = next_state(categories, upper_total, yahtzee, &[5, 0, 0, 0, 0, 0], ONES_CAT);
 
         let (cat_decoded, upp_total_decoded, yahtzee_decoded) = decode_state(next);
 
@@ -101,7 +93,7 @@ mod tests {
         assert_eq!(yahtzee_decoded, yahtzee);
 
         // fill all 1s in "3s" category
-        let next2 = next_state_encoded(next, &[5, 0, 0, 0, 0, 0], THREES_CAT);
+        let next2 = next_state(cat_decoded, upp_total_decoded, yahtzee_decoded, &[5, 0, 0, 0, 0, 0], THREES_CAT);
         let (cat_decoded2, upp_total_decoded2, yahtzee_decoded2) = decode_state(next2);
 
         assert_eq!(cat_decoded2, 0b000_0100_0010_1111);
@@ -115,9 +107,7 @@ mod tests {
         let upper_total: u8 = 23;
         let yahtzee: bool = false;
 
-        let encoded = encode_state(categories, upper_total, yahtzee);
-
-        let next = next_state_encoded(encoded, &[5, 0, 0, 0, 0, 0], YAHTZEE_CAT);
+        let next = next_state(categories, upper_total, yahtzee, &[5, 0, 0, 0, 0, 0], YAHTZEE_CAT);
 
         let (cat_decoded, upp_total_decoded, yahtzee_decoded) = decode_state(next);
 
