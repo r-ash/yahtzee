@@ -1,6 +1,11 @@
-[package]
-name = "yahtzee"
-version = "0.1.0"
-edition = "2024"
+[workspace]
+members = [
+    "yahtzee-core",
+    "yahtzee-solver",
+    "yahtzee-api",
+    "yahtzee-wasm",
+]
+resolver = "2"
 
-[dependencies]
+[profile.release]
+opt-level = "s"

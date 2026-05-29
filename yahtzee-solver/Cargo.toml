@@ -1,0 +1,17 @@
+[package]
+name = "yahtzee-solver"
+version = "0.1.0"
+edition = "2024"
+
+[lib]
+name = "yahtzee_solver"
+
+[[bin]]
+name = "solve"
+path = "src/main.rs"
+
+[dependencies]
+yahtzee-core = { path = "../yahtzee-core" }
+
+[target.'cfg(not(target_arch = "wasm32"))'.dependencies]
+rayon = "1"

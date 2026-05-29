@@ -1,0 +1,31 @@
+name: Build and publish yahtzee-wasm
+
+on:
+  push:
+    branches: [main]
+    tags: ['v*']
+
+jobs:
+  publish:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: dtolnay/rust-toolchain@stable
+        with:
+          targets: wasm32-unknown-unknown
+
+      - uses: jetli/wasm-pack-action@v0.4.0
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          registry-url: 'https://registry.npmjs.org'
+
+      - name: Build WASM package
+        run: wasm-pack build yahtzee-wasm --target web --release
+
+      - name: Publish to npm
+        run: npm publish yahtzee-wasm/pkg --access public
+        env:
+          NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
