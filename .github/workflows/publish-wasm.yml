@@ -5,6 +5,10 @@ on:
     branches: [main]
     tags: ['v*']
 
+permissions:
+  id-token: write
+  contents: read
+
 jobs:
   publish:
     runs-on: ubuntu-latest
@@ -27,5 +31,3 @@ jobs:
 
       - name: Publish to npm
         run: npm publish yahtzee-wasm/pkg --access public
-        env:
-          NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
